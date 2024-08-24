@@ -1,0 +1,52 @@
+
+services:
+  db:
+    image: mysql:8.0.37
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: appium
+      MYSQL_USER: alaa
+      MYSQL_PASSWORD: alaa22
+      MYSQL_ROOT_PASSWORD: alaa22
+  
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    
+    environment:
+      - DATABASE_URL=mysql://alaa:alaa22@db:3306/appium
+      - deviceName='Medium Phone API 35'
+    env_file:
+      - .env
+
+  appium:
+    image: appium/appium
+    ports:
+      - "4723:4723"
+    volumes:
+
+      - /dev/shm:/dev/shm
+      - /dev/bus/usb:/dev/bus/usb
+  
+    environment:
+      - APPIUM_LOG_LEVEL=info
+      - deviceName=Medium Phone API 35
+      - platformName=Android
+      - automationName=uiautomator2
+    command: appium
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+
+volumes:
+  mysql_data:

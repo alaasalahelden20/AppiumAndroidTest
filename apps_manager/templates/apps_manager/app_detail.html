@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ app.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin: 0;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>{{ app.name }}</h1>
+        <p><strong>Uploaded by:</strong> {{ app.uploaded_by.username }}</p>
+        <p><strong>APK File:</strong> <a href="{{ app.apk_file_path.url }}">{{ app.apk_file_path.name }}</a></p>
+        {% if app.first_screen_screenshot_path %}
+            <p><strong>First Screen Screenshot:</strong></p>
+            <img src="{{ app.first_screen_screenshot_path.url }}" alt="First Screen">
+        {% endif %}
+        {% if app.second_screen_screenshot_path %}
+            <p><strong>Second Screen Screenshot:</strong></p>
+            <img src="{{ app.second_screen_screenshot_path.url }}" alt="Second Screen">
+        {% endif %}
+        {% if app.video_recording_path %}
+            <p><strong>Video Recording:</strong> <a href="{{ app.video_recording_path.url }}">{{ app.video_recording_path.name }}</a></p>
+        {% endif %}
+        <p><strong>UI Hierarchy:</strong></p>
+        <pre>{{ app.ui_hierarchy }}</pre>
+        <p><strong>Screen Changed:</strong> {{ app.screen_changed }}</p>
+        <p><strong>Created At:</strong> {{ app.created_at }}</p>
+        <p><strong>Updated At:</strong> {{ app.updated_at }}</p>
+        <a href="{% url 'app_list' %}">Back to Apps List</a>
+    </div>
+</body>
+</html>

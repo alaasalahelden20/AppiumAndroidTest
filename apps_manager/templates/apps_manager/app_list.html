@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Apps</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            margin: 10px auto;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 600px;
+            position: relative;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .actions a {
+            margin-left: 10px;
+            color: #333;
+        }
+
+        .actions a:hover {
+            color: #007bff;
+        }
+
+        .upload-link {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            max-width: 200px;
+            font-weight: bold;
+        }
+
+        .upload-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Apps</h1>
+    <ul>
+        {% for app in apps %}
+            <li>
+                <a href="{% url 'app_detail' app.id %}">{{ app.name }}</a> - Uploaded on {{ app.created_at }}
+                <div class="actions">
+                    <a href="{% url 'app_update' app.id %}">Edit</a>
+                    <a href="{% url 'app_delete' app.id %}">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <a class="upload-link" href="{% url 'app_create' %}">Upload a new App</a>
+</body>
+</html>
